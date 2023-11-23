@@ -6,7 +6,7 @@ Welcome to the documentation for scSemiProfiler!
 ``scSemiProfiler``  A computational tool that economically generate single-cell data for biological studies using deep generative model and active learning algorithm. 
 
 
-.. image:: ../method.jpg
+.. image:: ../../method.jpg
    :width: 800
    :alt: Mothod Overview
 
