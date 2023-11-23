@@ -2,12 +2,12 @@
 requires = ["setuptools", "wheel", "flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
-[project]
-name = "lumache"   #"scSemiProfiler"
+#[project]
+#name =   #"scSemiProfiler"
 #version = "1.0.0"
-description = "Economically generating single-cell data for biological studies based on deep generativee learning and activee learning"
-readme = "README.md"
-requires-python = ">=3.9"
+#description = "Economically generating single-cell data for biological studies based on deep generativee learning and activee learning"
+#readme = "README.md"
+#requires-python = ">=3.9"
 
 keywords = ["Deep Generative Learning", "Active Learning", "Bulk Deconvolution", "Single-cell sequencing",
 "Bulk sequencing", "Cohort studies", "scSemiProfiler"]
