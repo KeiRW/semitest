@@ -1,26 +1,31 @@
-Welcome to scSemiProfiler' documentation!
+Welcome to the documentation for scSemiProfiler!
 ==================================
 
 
 
-``scSemiProfiler``  A Deep Learning-Based Model for the integration, cross-dataset cross-modality generation, self enhancing and matched multi-omics simulation of single-cell multi-omics data. Our model excels at maintaining in-silico perturbations during cross-modality generation and harnessing these perturbations to identify key genes.
+``scSemiProfiler``  A computational tool that economically generate single-cell data for biological studies using deep generative model and active learning algorithm. 
 
 
-.. image:: _static/method.jpg
+.. image:: ../method.jpg
    :width: 800
    :alt: Mothod Overview
 
 
+.. note::
 
+   This project is under active development.
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    installation
    tutorials
    gallery
    release
+   contact
    references
 
 
