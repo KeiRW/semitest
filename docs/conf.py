@@ -3,7 +3,7 @@ Sphinx configuration
 """
 
 import inspect
-#import sccross
+#import scsemiprofiler
 import sphinx_autodoc_typehints
 project = 'scSemiProfiler'
 version = '1.0.0'
