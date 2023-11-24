@@ -21,7 +21,8 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   installation
+   install
+   api
    tutorials
    gallery
    release
