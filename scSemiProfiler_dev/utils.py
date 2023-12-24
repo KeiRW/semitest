@@ -19,7 +19,7 @@ import scipy.stats as stats
 import gseapy
 import copy
 from typing import Tuple
-from scSemiProfiler_dev.inference import *
+from .inference import *
 
 import faiss
 from sklearn.decomposition import PCA
