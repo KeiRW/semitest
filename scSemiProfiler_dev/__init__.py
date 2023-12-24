@@ -1,4 +1,7 @@
 """This is scSemiProfiler_dev, a tool for semi-profiling single-cell sequencing data."""
+
+__version__ = '0.1.0'
+
 import pdb,sys,os
 
 
