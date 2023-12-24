@@ -18,9 +18,9 @@ from scipy import stats
 from sklearn.neighbors import kneighbors_graph
 from matplotlib.pyplot import figure
 
-
+from typing import Tuple
 from torch.utils.data import Dataset
-import anndata
+
 
 
 def gen_tf_gene_table(genes, tf_list, dTD):
@@ -159,7 +159,7 @@ def getGeneSetMatrix(_name, genes_upper, gene_sets_path):
     return gene_set_matrix, keys
 
         
-def fast_cellgraph(adata: anndata.AnnData,k: int = 15,diagw: float=1.0) -> Tuple[AnnData, np.ndarray]:
+def fast_cellgraph(adata: anndata.AnnData,k: int = 15,diagw: float=1.0) -> Tuple[anndata.AnnData, np.ndarray]:
     """
     Augment an anndata object using a cell neighbor graph. 
 

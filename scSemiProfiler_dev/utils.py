@@ -12,13 +12,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import seaborn as sn
 from scipy import sparse
-
+from typing import Union
 from mpmath import *
 mp.dps = 200
 import scipy.stats as stats
 import gseapy
 import copy
-
+from typing import Tuple
 from scSemiProfiler_dev.inference import *
 
 import faiss
@@ -26,7 +26,17 @@ from sklearn.decomposition import PCA
 
 
 
-def get_eg_representatives(name):
+def get_eg_representatives(name:str) -> None:
+    """
+    Get representatives' single-cell data and store it as /representative_sc.h5ad under the project's directory
+    
+    Parameters
+    ----------
+    name 
+        Project name
+
+    """
+    
     scdata = anndata.read_h5ad('example_data/scdata.h5ad')
     sids = []
     f = open(name + '/sids.txt', 'r')
@@ -84,7 +94,24 @@ def get_eg_representatives(name):
 
 
 
-def estimate_cost(total_samples,n_representatives):
+def estimate_cost(total_samples:int,n_representatives:int) -> Tuple[float,float]:
+    """
+    Estimate the cost of semi-profiling and real-profiling.
+
+    Parameters
+    ----------
+    total_samples
+        Total number of samples
+    n_representatives:
+        Number of representatives
+        
+    Returns
+    -------
+    semicost
+        Cost of semi-profiling
+    realcost
+        Cost of real-profiling
+    """
     
     bulkcost = 7000 + total_samples * 110
     sccost = 5000 * 0.3 * n_representatives
@@ -101,7 +128,19 @@ def estimate_cost(total_samples,n_representatives):
 
 
 # visualizing reconstruction performance of a representative
-def visualize_recon(name, representative):
+def visualize_recon(name:str, representative:Union[int,str]) -> None:
+    """
+    Visualize the performance of reconstruction by plotting the original and reconstructed data in the same UMAP.
+
+    Parameters
+    ----------
+    name
+        Project name
+    representative:
+        Representative sample ID (string or int)
+        
+    """
+    
     sids = []
     f = open(name+'/sids.txt','r')
     lines = f.readlines()
@@ -155,7 +194,23 @@ def visualize_recon(name, representative):
     sc.pl.umap(vdata,color='reconstruction',alpha=0.5,palette=palette)
 
 # visualizing inference performance for a target sample
-def visualize_inferred(name, target, representatives, cluster_labels):
+def visualize_inferred(name:str, target:int, representatives:list, cluster_labels:list) -> None:
+    """
+    Visualize the inference performance by plotting the representative, inferred target, and target ground truth in the same UMAP.
+
+    Parameters
+    ----------
+    name
+        Project name
+    target:
+        Target sanmple ID (number)
+    representatives:
+        Representatives sample IDs (int)
+    cluster_labels:
+        Cluster labels
+        
+    """
+    
     sids = []
     f = open(name+'/sids.txt','r')
     lines = f.readlines()
@@ -193,7 +248,23 @@ def visualize_inferred(name, target, representatives, cluster_labels):
     
     return
 
-def loss_curve(name, reprepid=None,tgtpid=None,stage=1):
+def loss_curve(name:str, reprepid:int=None,tgtpid:int=None,stage:int=1)->None:
+    """
+    Visualize the training loss curves
+
+    Parameters
+    ----------
+    name
+        Project name
+    reprepid:
+        Representative sanmple ID 
+    tgtpid:
+        target sample IDs 
+    stage:
+        The training stage to visualize, 1: pretrain1; 2: pretrain2; 3: inference 
+        
+    """
+    
     sids = []
     f = open(name+'/sids.txt','r')
     lines = f.readlines()
@@ -236,11 +307,34 @@ def loss_curve(name, reprepid=None,tgtpid=None,stage=1):
 
 
 
-def assemble_cohort(name,
-                    representatives,
-                    cluster_labels,
-                    celltype_key = 'celltypes',
+def assemble_cohort(name:str,
+                    representatives:Union[list,str],
+                    cluster_labels:Union[list,str],
+                    celltype_key:str = 'celltypes',
                     sample_info_keys = ['states_collection_sum']):
+    """
+    Assemble inferred sample data and representative sample data into semi-profiled cohort and annotate the celltype. 
+    
+    Parameters
+    ----------
+    name: 
+        Project name
+    representatives:
+        Either a list of representatives or path to a txt file specifying the representative information
+    cluster_labels:
+        Either a list of sample cluster labels or path to a txt file specifying the sample cluster label information
+    celltype_key:
+        The key in .obs specifying the cell type information
+    sample_info_keys:
+        Keys for other sample-level information to be stored in the assembled dataset
+
+    Returns
+    -------
+    semidata:
+        The assembled and annotated semi-profiled dataset
+
+    """
+    
     
     print('Start assembling semi-profiled cohort.')
     
@@ -361,7 +455,31 @@ def assemble_cohort(name,
     return semidata
 
 
-def assemble_representatives(name,celltype_key='celltypes',sample_info_keys = ['states_collection_sum'],rnd=2,batch=2):
+def assemble_representatives(name:str,celltype_key:str='celltypes',sample_info_keys:list = ['states_collection_sum'],rnd:int=2,batch:int=2) -> Tuple[anndata.AnnData, anndata.AnnData]:
+    """
+    Assemble previous round of inferred representative data and annotate the cell type. The real-profiled representatives in the current round is also provided for comparison.
+    
+    Parameters
+    ----------
+    name: 
+        Project name
+    celltype_key:
+        The key in .obs specifying the cell type information
+    sample_info_keys:
+        Keys for other sample-level information to be stored in the assembled dataset
+    rnd:
+        The round of semi-profiling to assemble. For example, select the second round (2 batches of representatives) using rnd = 2
+    batch:
+        The representative selection batch size
+
+    Returns
+    -------
+    realrepdata:
+        The real-profiled representative dataset
+    infrepdata:
+        The inferred representative dataset
+
+    """
     
     sids=[]
     f = open(name+'/sids.txt','r')
@@ -487,12 +605,39 @@ def assemble_representatives(name,celltype_key='celltypes',sample_info_keys = ['
 
 
 def compare_umaps(
-                    semidata,
-                    name = 'testexample',
-                    representatives = 'testexample/status/init_representatives.txt',
-                    cluster_labels = 'testexample/status/init_cluster_labels.txt',
-                    celltype_key = 'celltypes'
-                 ):
+                    semidata:anndata.AnnData,
+                    name:str = 'testexample',
+                    representatives:str = 'testexample/status/init_representatives.txt',
+                    cluster_labels:str = 'testexample/status/init_cluster_labels.txt',
+                    celltype_key:str = 'celltypes'
+                 ) -> Tuple[anndata.AnnData, anndata.AnnData, anndata.AnnData]:
+    """
+    Compare the real-profiled and semi-profiled datasets by plotting them in a same UMAP
+    
+    Parameters
+    ----------
+    semidata:
+        Semi-profiled dataset
+    name: 
+        Project name
+    representatives:
+        Path to the txt file storing the representative information
+    cluster_labels:
+        Path to the txt file storing the cluster label information
+    celltype_key:
+        The key in .obs specifying the cell type information
+
+    Returns
+    -------
+    combdata
+        Combined dataset, with real-profiled cells in the front
+    gtdata
+        Real-profiled dataset
+    semidata
+        Semi-profiled dataset
+
+    """
+    
     # visualize UMAPs of real-profiled and semi-profiled data for comparison
     # return both datasets with PCA and UMAP coordinates added
     gtdata = anndata.read_h5ad('example_data/scdata.h5ad')
@@ -529,11 +674,37 @@ def compare_umaps(
 
 
 def compare_adata_umaps(
-    semidata,
-    gtdata,                
-    name = 'testexample',
-    celltype_key = 'celltypes'
-    ):
+    semidata:anndata.AnnData,
+    gtdata:anndata.AnnData,                
+    name:str = 'testexample',
+    celltype_key:str = 'celltypes'
+    ) -> Tuple[anndata.AnnData, anndata.AnnData, anndata.AnnData]:
+    """
+    Compare the real-profiled and semi-profiled datasets by plotting them in a same UMAP
+    
+    Parameters
+    ----------
+    semidata:
+        Semi-profiled dataset
+    gtdata:
+        Real-profiled dataset
+    name: 
+        Project name
+    celltype_key:
+        The key in .obs specifying the cell type information
+
+    Returns
+    -------
+    combdata
+        Combined dataset, with real-profiled cells in the front
+    gtdata
+        Real-profiled dataset
+    semidata
+        Semi-profiled dataset
+        
+    """
+    
+    
     
     x0 = np.array(gtdata.X.todense())
     x1 = np.array(semidata.X)
@@ -567,7 +738,24 @@ def compare_adata_umaps(
 
 
 
-def celltype_proportion(adata,totaltypes):
+def celltype_proportion(adata:anndata.AnnData,totaltypes:Union[np.array,list]) -> np.array:
+    """
+    Compute the cell type proportion in a dataset
+    
+    Parameters
+    ----------
+    adata:
+        The dataset to investigate
+    totaltypes:
+        The total cell types to consider
+
+    Returns
+    -------
+    prop
+        Cell type proportion
+        
+    """
+    
     prop = np.zeros(len(totaltypes))
     for i in range(len(totaltypes)):
         prop[i] += (adata.obs['celltypes'] == totaltypes[i]).sum()
@@ -581,12 +769,31 @@ def celltype_proportion(adata,totaltypes):
 
 
 def composition_by_group(
-    adata,
-    colormap = None,
-    groupby = None,
-    save = False,
-    title = 'Cell type composition'
-    ):
+    adata:anndata.AnnData,
+    colormap:Union[str,list] = None,
+    groupby:str = None,
+    save:bool = False,
+    title:str = 'Cell type composition'
+    ) -> None:
+    """
+    Visualizing the cell type composition in each group.
+    
+    Parameters
+    ----------
+    adata:
+        The dataset to investigate
+    colormap:
+        The colormap for visualization
+    groupby:
+        The key in .obs specifying groups.
+    save:
+        Whether to save the plot or not
+    title:
+        Plot title
+    
+
+        
+    """
     
     totaltypes = np.array(adata.obs['celltypes'].cat.categories)
     
@@ -640,12 +847,35 @@ IFN_genes = ["ABCE1", "ADAR", "BST2", "CACTIN", "CDC37", "CNOT7", "DCST1", "EGR1
 
 
 def geneset_pattern(
-    adata,
-    genes,
-    condition_key,
-    celltype_key,
-    baseline=None,
-    ):
+    adata: anndata.AnnData,
+    genes: list,
+    condition_key: str,
+    celltype_key: str,
+    baseline:str = None,
+    ) -> np.array:
+    """
+    Generate heatmaps for visualizing gene set activation pattern in a dataset.
+    
+    Parameters
+    ----------
+    adata:
+        The dataset to investigate
+    genes:
+        The list of genes in the gene set
+    condition_key:
+        The key in .obs specifying different sample conditions.
+    celltype_key:
+        The key in .obs specifying cell type information
+    baseline:
+        Baseline condition
+
+    Returns
+    -------
+    pattern
+        np.array
+        
+    """
+    
     sc.tl.score_genes(adata, genes, ctrl_size=50, gene_pool=None, n_bins=25, score_name='geneset', random_state=0, copy=False, use_raw=None)
     
     conditions = np.unique(adata.obs[condition_key])
@@ -674,7 +904,20 @@ def geneset_pattern(
 
 
 # dot plot
-def celltype_signature_comparison(gtdata,semisdata,celltype_key):
+def celltype_signature_comparison(gtdata:anndata.AnnData,semisdata:anndata.AnnData,celltype_key:str) -> None:
+    """
+    Use dotplot to compare the cell type signatures found using the real-profiled dataset and the semi-profiled datset.
+    
+    Parameters
+    ----------
+    gtdata:
+        The real-profiled dataset
+    semisdata:
+        The semi-profiled dataset
+    celltype_key:
+        The key in .obs specifying the cell type labels
+        
+    """
     totaltypes = np.unique(gtdata.obs[celltype_key])
     
     sc.tl.rank_genes_groups(gtdata, celltype_key, method='t-test')
@@ -707,13 +950,51 @@ def celltype_signature_comparison(gtdata,semisdata,celltype_key):
 
 
 ### statistics utils and rrho
-def comb(a,b):
+def comb(a:int,b:int) -> mp.mpf:
+    """
+    Combination number
+    
+    Parameters
+    ----------
+    a:
+        The total number of choice
+    b:
+        The number of elements to choose.
+
+    Returns
+    -------
+    cad
+        Choose a from b
+        
+    """
     a=mp.mpf(a)
     b=mp.mpf(b)
     cab = fac(a)/fac(a-b)/fac(b)
     return cab
 
-def hyperp(N,n1,n2,k):
+def hyperp(N:int,n1:int,n2:int,k:int) -> mp.mpf:
+    """
+    Returns the cdf of a hypergeometric test.
+    
+    Parameters
+    ----------
+    N:
+        Population size. In our case this is the total number of gene
+    n1:
+        The number of element in the first set
+    n2:
+        The number of element in the second set
+    k:
+        The number of overlap
+
+    Returns
+    -------
+    p
+        cdf
+        
+    """
+    #cdf
+    
     N = mp.mpf(N)
     n1 = mp.mpf(n1)
     n2 = mp.mpf(n2)
@@ -721,14 +1002,66 @@ def hyperp(N,n1,n2,k):
     p = comb(n2,k)*comb(N-n2,n1-k)/comb(N,n1)
     return p 
 
-def hypert(N,n1,n2,k):
+def hypert(N:int,n1:int,n2:int,k:int) -> mp.mpf:
+    """
+    Returns the p-value of a hypergeometric test.
+    
+    Parameters
+    ----------
+    N:
+        Population size. In our case this is the total number of gene
+    n1:
+        The number of element in the first set
+    n2:
+        The number of element in the second set
+    k:
+        The number of overlap
+
+    Returns
+    -------
+    pval
+        p-value
+        
+    """
     cdf = mp.mpf(0)
     for i in range(0,int(k)+1):
         cdf += hyperp(N,n1,n2,i)
        # print()
     return (1-cdf)
 
-def rrho_plot(list1, list2, list3, list4, celltype, population ,upperbound=50):
+def rrho_plot(list1:list, list2:list, list3:list, list4:list, celltype:str, population:int ,upperbound:int=50) -> Tuple[np.array,np.array,np.array,np.array]:
+    """
+    Generates data for RRHO graph used to compare the positive and negative markers found using real-profiled and semi-profiled datasets.
+    
+    Parameters
+    ----------
+    list1:
+         Positive markers found using the real-profiled dataset
+    list2:
+        Positive markers found using the semi-profiled dataset
+    list3:
+        Negative markers found using the real-profiled dataset
+    list4:
+        Negative markers fuond using the semi-profiled dataset
+    celltype:
+        The selected cell type to analyze 
+    population:
+        The population size in hypergeometric test for evaluating the overlap between two gene lists. In our case this will be to total number of genes used.
+    upperbound:
+        The upperbound for negative log p-value for visualization
+
+    Returns
+    -------
+    rrho_matrix1
+        Values for the first quadrant
+    rrho_matrix2
+        Values for the second quadrant
+    rrho_matrix3
+        Values for the third quadrant
+    rrho_matrix4
+        Values for the forth quadrant
+        
+    """
     
     n1 = len(list1) # gt pos
     n2 = len(list2) # semi pos
@@ -858,22 +1191,29 @@ def rrho_plot(list1, list2, list3, list4, celltype, population ,upperbound=50):
     #plt.savefig('results/RRHO50_'+celltype+'.pdf')
     plt.show()
     
-    #plt.imshow(rrho_matrix2, cmap=cmap, aspect='auto')
-    #plt.colorbar(label='-log10(p)')
-    
-
-
-
-
-    #plt.savefig('results/RRHO50_colorbar.pdf')
-    #plt.show()
     
     return rrho_matrix1,rrho_matrix2,rrho_matrix3,rrho_matrix4
 
 
 
 
-def rrho(gtdata,semisdata,celltype_key,celltype):
+def rrho(gtdata:anndata.AnnData,semisdata:anndata.AnnData,celltype_key:str,celltype:str) -> None:
+    """
+    Use RRHO graph to compare the positive and negative markers found using real-profiled and semi-profiled datasets.
+    
+    Parameters
+    ----------
+    gtdata:
+        Real-profiled (ground truth) data
+    semisdata:
+        Semi-profiled dataset
+    celltype_key:
+        The key in anndata.AnnData.obs for storing the cell type information
+    celltype:
+        The selected cell type to analyze 
+
+    """
+    
     print('Plotting RRHO for comparing ' + str(celltype) + ' markers.')
     sc.tl.rank_genes_groups(gtdata, celltype_key, method='t-test',rankby_abs=True)
     sc.tl.rank_genes_groups(semisdata, celltype_key, method='t-test',rankby_abs=True)
@@ -922,7 +1262,24 @@ def rrho(gtdata,semisdata,celltype_key,celltype):
 
 
 
-def enrichment_comparison(name, gtdata, semisdata, celltype_key, selectedtype):
+def enrichment_comparison(name:str, gtdata:anndata.AnnData, semisdata:anndata.AnnData, celltype_key:str, selectedtype:str)->None:
+    """
+    Compare the enrichment analysis results using the real-profiled and semi-profiled datasets. 
+    
+    Parameters
+    ----------
+    name:
+        Project name
+    gtdata:
+        Real-profiled (ground truth) data
+    semisdata:
+        Semi-profiled dataset
+    celltype_key:
+        The key in anndata.AnnData.obs for storing the cell type information
+    selectedtype:
+        The selected cell type to analyze 
+
+    """
     
     totaltypes = np.unique(gtdata.obs[celltype_key])
     sc.tl.rank_genes_groups(gtdata, celltype_key, method='t-test')
@@ -1051,7 +1408,26 @@ def enrichment_comparison(name, gtdata, semisdata, celltype_key, selectedtype):
     
     
     
-def faiss_knn(query, x, n_neighbors=1):
+def faiss_knn(query:np.array, x:np.array, n_neighbors:int=1) -> np.array:
+    """
+    Compute distances from a vector to its K-nearest neighbros in a matrix. 
+    
+    Parameters
+    ----------
+    query:
+        The query vector
+    X:
+        The data matrix
+    n_neighbors:
+        How many neighbors to consider?
+    
+    Returns
+    -------
+    weights: distances
+
+    """
+    
+    
     n_samples = x.shape[0]
     n_features = x.shape[1]
     x = np.ascontiguousarray(x)
@@ -1079,7 +1455,29 @@ def faiss_knn(query, x, n_neighbors=1):
 
 
 
-def get_error(name):
+def get_error(name:str)->Tuple[list,list,list,list]:
+    """
+    Conclude the semi-profiling history of a project and output the erros, upperbounds, and lower bounds, which are necessary for overall performance evaluation.
+
+    Parameters
+    ----------
+    name:
+        Project name
+
+    Returns
+    -------
+    upperbounds
+        The error upper bounds calculated in each round
+    lowerbounds
+        The error lower bounds calculated in each round
+    semierrors
+        The errors of semi-profiling
+    naiveerrors
+        The errors of the selection-only method 
+
+    """
+    
+    
     
     # load gound truth
     print('loading and processing ground truth data.')
@@ -1241,7 +1639,27 @@ def get_error(name):
     return upperbounds, lowerbounds, semierrors, naiveerrors
 
 
-def errorcurve(upperbounds, lowerbounds, semierrors, naiveerrors, batch=2,total_samples = 12):
+def errorcurve(upperbounds:list, lowerbounds:list, semierrors:list, naiveerrors:list, batch:int=2,total_samples:int = 12) -> None:
+    """
+    Visualize the error and cost as more representatives are sequenced.
+
+    Parameters
+    ----------
+    upperbounds
+        The error upper bounds calculated in each round
+    lowerbounds
+        The error lower bounds calculated in each round
+    semierrors
+        The errors of semi-profiling
+    naiveerrors
+        The errors of the selection-only method 
+    batch
+        Representative selection batch size
+    total_samples
+        The total number of samples in the cohort
+
+    """
+    
     ub = np.mean(upperbounds)
     lb = np.mean(lowerbounds)
     

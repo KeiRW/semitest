@@ -10,7 +10,7 @@ import scanpy as sc
 from sklearn.neighbors import kneighbors_graph
 import gc
 from scSemiProfiler_dev.fast_generator import *
-
+from typing import Union, Tuple
 import pickle
 
 def setdata(name:str,sid:str,device:str='cuda:0',k:int=15,diagw:float=1.0)  -> Tuple[anndata.AnnData, torch.Tensor, torch.Tensor, torch.Tensor, int]:
