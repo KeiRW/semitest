@@ -7,7 +7,9 @@ build:
 
 python:
   install:
-    - requirements: setup.py
+    - method: pip
+      path: .
+    #    - requirements: setup.py
 
 sphinx:
   configuration: docs/source/conf.py
