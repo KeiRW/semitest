@@ -2,7 +2,7 @@ r"""
 Sphinx configuration
 """
 import os, sys
-import sphinx_autodoc_typehints
+#import sphinx_autodoc_typehints
 
 sys.path.insert(0, os.path.abspath('../..'))
 
@@ -23,11 +23,11 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
 
-    'sphinx.ext.napoleon',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.mathjax',
-    'sphinx_copybutton',
-    'nbsphinx'
+    #'sphinx.ext.napoleon',
+    #'sphinx.ext.viewcode',
+    #'sphinx.ext.mathjax',
+    #'sphinx_copybutton',
+    #'nbsphinx'
 ]
 
 intersphinx_mapping = {
