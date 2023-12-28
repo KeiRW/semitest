@@ -69,7 +69,7 @@ qualname_overrides = {
 }
 
 fa_orig = sphinx_autodoc_typehints.format_annotation
-def format_annotation(annotation, fully_qualified=True):  # pylint: disable=unused-argument
+def format_annotation(annotation, config, fully_qualified=True):  # pylint: disable=unused-argument
     r"""
     Adapted from https://github.com/agronholm/sphinx-autodoc-typehints/issues/38#issuecomment-448517805
     """
