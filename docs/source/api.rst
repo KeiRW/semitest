@@ -12,10 +12,3 @@ and classes in ``seSemiProfiler``.
 
    scSemiProfiler_dev
 
-..
-   .. automodule:: scSemiProfiler_dev.initial_setup
-      :members: initsetup
-
-
-   .. automodule:: scSemiProfiler_dev.get_eg_representatives
-      :members: get_eg_representatives
