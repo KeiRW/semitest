@@ -2,6 +2,7 @@ r"""
 Sphinx configuration
 """
 import os, sys
+import inspect
 import sphinx_autodoc_typehints
 
 sys.path.insert(0, os.path.abspath('../..'))
