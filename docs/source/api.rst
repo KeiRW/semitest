@@ -6,7 +6,6 @@ and classes in ``seSemiProfiler``.
 
 .. autosummary::
    :toctree: api
-   :template: module.rst
    :recursive:
 
    scSemiProfiler_dev
