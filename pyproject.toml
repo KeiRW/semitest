@@ -20,4 +20,14 @@ dynamic = ["version", "description"]
     'gseapy>=1.0.4',                  
     'scvi-tools>= 1.0.4']
 
-
+[project.optional-dependencies]
+doc = [
+    "sphinx<4",
+    "sphinx-autodoc-typehints<1.12",
+    "sphinx-copybutton",
+    "nbsphinx",
+    "sphinx-rtd-theme",
+    "ipython",
+    "jinja2<3.1",
+    "prompt-toolkit<3.0.0"
+]
