@@ -68,19 +68,6 @@ qualname_overrides = {
     'torch.nn.modules.module.Module': 'torch.nn.Module'
 }
 
-fa_orig = sphinx_autodoc_typehints.format_annotation
-def format_annotation(annotation, config, fully_qualified=True):  # pylint: disable=unused-argument
-    r"""
-    Adapted from https://github.com/agronholm/sphinx-autodoc-typehints/issues/38#issuecomment-448517805
-    """
-    if inspect.isclass(annotation):
-        full_name = f'{annotation.__module__}.{annotation.__qualname__}'
-        override = qualname_overrides.get(full_name)
-        if override is not None:
-            return f':py:class:`~{override}`'
-    return fa_orig(annotation)
-sphinx_autodoc_typehints.format_annotation = format_annotation
-
 
 intersphinx_disabled_domains = ['std']
 
