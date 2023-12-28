@@ -73,6 +73,24 @@ intersphinx_disabled_domains = ['std']
 
 templates_path = ['_templates']
 
+
+source_suffix = '.rst'
+master_doc = 'index'
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+html_show_sourcelink = True
+set_type_checking_flag = True
+typehints_fully_qualified = True
+napoleon_use_rtype = False
+autosummary_generate = True
+autosummary_generate_overwrite = True
+autodoc_preserve_defaults = True
+autodoc_inherit_docstrings = True
+autodoc_default_options = {
+    'autosummary': True
+}
+
+
 # -- Options for HTML output
 html_theme = 'sphinx_rtd_theme'
 
