@@ -29,6 +29,6 @@ doc = [
     "sphinx-rtd-theme",
     "ipython",
     "jinja2<3.1",
-    "prompt-toolkit<3.0.0"
-
+    "prompt-toolkit<3.0.0",
+    "sphinx_autodoc_typehints"
 ]
