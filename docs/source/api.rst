@@ -10,4 +10,4 @@ and classes in ``seSemiProfiler``.
    :template: module.rst
    :recursive:
 
-    scSemiProfiler_dev
+   scSemiProfiler_dev
