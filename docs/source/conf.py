@@ -76,7 +76,8 @@ templates_path = ['_templates']
 
 source_suffix = '.rst'
 master_doc = 'index'
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store',\
+'scSemiProfiler_dev.fast_generator.reparameterize_gaussian', 'scSemiProfiler_dev.fast_generator.AdversarialTrainingPlan']
 
 html_show_sourcelink = True
 set_type_checking_flag = True
@@ -98,4 +99,3 @@ html_theme = 'sphinx_rtd_theme'
 epub_show_urls = 'footnote'
 
 
-exclude_patterns = ['fast_generator.reparameterize_gaussian', 'fast_generator.AdversarialTrainingPlan']
