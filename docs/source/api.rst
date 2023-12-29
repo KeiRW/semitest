@@ -21,6 +21,38 @@ Initial Setup
    seSemiProfiler_dev.initial_setup.initsetup
 
 
+Initial Setup
+--------
+
+.. autosummary::
+   :toctree: api/initial_setup
+   :template: module.rst
+
+   seSemiProfiler_dev.initial_setup.initsetup
+
+
+Initial Setup
+--------
+
+.. autosummary::
+   :toctree: initial_setup
+   :template: module.rst
+
+   seSemiProfiler_dev.initial_setup.initsetup
+
+
+
+Initial Setup
+--------
+
+.. autosummary::
+   :toctree: 
+   :template: module.rst
+
+   seSemiProfiler_dev.initial_setup.initsetup
+
+
+
 Get Example Representatives
 --------
 
@@ -52,3 +84,48 @@ The VAE-GAN Model
 
    seSemiProfiler_dev.fast_generator
 
+
+
+The VAE-GAN Model
+--------
+
+.. autosummary::
+   :toctree: fast_generator
+   :template: module.rst
+   :recursive:
+
+   seSemiProfiler_dev.fast_generator
+
+
+
+The VAE-GAN Model
+--------
+
+.. autosummary::
+   :toctree: _modules
+   :template: module.rst
+   :recursive:
+
+   seSemiProfiler_dev.fast_generator
+
+
+The VAE-GAN Model
+--------
+
+.. autosummary::
+   :toctree: 
+   :template: module.rst
+   :recursive:
+
+   seSemiProfiler_dev.fast_generator
+
+
+The VAE-GAN Model
+--------
+
+.. autosummary::
+   :toctree: api
+   :template: module.rst
+   :recursive:
+
+   seSemiProfiler_dev.fast_generator
