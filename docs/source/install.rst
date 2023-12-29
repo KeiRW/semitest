@@ -1,6 +1,3 @@
-Installation guide
-==================
-
 
 Prerequisites
 -------------
