@@ -3,7 +3,7 @@ Installation guide
 
 
 Prerequisites
-~~~
+-------------
 
 First, install `Anaconda <https://www.anaconda.com/>`_ for your operating system if you have not. You can find specific instructions for different operating systems `here <https://conda.io/projects/conda/en/latest/user-guide/getting-started.html>`_.
 
@@ -14,20 +14,21 @@ Second, create a new conda environment and activate it::
 
 Finally, install the version of PyTorch compatible with your devices by following the `instructions on the official website <https://pytorch.org/get-started/locally/>`_.
 
-Installation
-~~~
+
+Installing scSemiProfiler
+-------------------------
 
 There are 2 options to install scSemiProfiler.
 
 Option 1: Install from download directory
------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Download scSemiProfiler from this repository, go to the downloaded scSemiProfiler package root directory and use pip tool to install::
+Download scSemiProfiler from the `GitHub repository <https://github.com/mcgilldinglab/scSemiProfiler>`_, go to the downloaded scSemiProfiler root directory and use pip tool to install::
 
     pip install .
 
 Option 2: Install from Github
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
