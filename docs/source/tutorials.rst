@@ -6,4 +6,4 @@ This tutorial goes though how to use ``scSemiProfiler`` to preprocess and semi-p
 
 
 .. toctree::
-    ../../dev_example.ipynb
+    dev_example.ipynb
