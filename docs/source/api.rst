@@ -7,10 +7,6 @@ and classes in ``seSemiProfiler``.
 
 
 
-.. toctree::
-   :maxdepth: 2
-
-
 Initial Setup
 --------
 
@@ -21,7 +17,7 @@ Initial Setup
    seSemiProfiler_dev.initial_setup.initsetup
 
 
-Initial Setup
+Initial Setup 2
 --------
 
 .. autosummary::
@@ -31,7 +27,7 @@ Initial Setup
    seSemiProfiler_dev.initial_setup.initsetup
 
 
-Initial Setup
+Initial Setup 3
 --------
 
 .. autosummary::
@@ -42,7 +38,7 @@ Initial Setup
 
 
 
-Initial Setup
+Initial Setup 4
 --------
 
 .. autosummary::
@@ -74,7 +70,7 @@ The VAE-GAN Model
    seSemiProfiler_dev.fast_generator
 
 
-The VAE-GAN Model
+The VAE-GAN Model 1
 --------
 
 .. autosummary::
@@ -86,7 +82,7 @@ The VAE-GAN Model
 
 
 
-The VAE-GAN Model
+The VAE-GAN Model 2
 --------
 
 .. autosummary::
@@ -98,7 +94,7 @@ The VAE-GAN Model
 
 
 
-The VAE-GAN Model
+The VAE-GAN Model 3
 --------
 
 .. autosummary::
@@ -109,7 +105,7 @@ The VAE-GAN Model
    seSemiProfiler_dev.fast_generator
 
 
-The VAE-GAN Model
+The VAE-GAN Model 4
 --------
 
 .. autosummary::
@@ -120,7 +116,40 @@ The VAE-GAN Model
    seSemiProfiler_dev.fast_generator
 
 
-The VAE-GAN Model
+The VAE-GAN Model 5
+--------
+
+.. autosummary::
+   :toctree: api
+   :template:
+   :recursive:
+
+   seSemiProfiler_dev.fast_generator
+
+
+The VAE-GAN Model 6
+--------
+
+.. autosummary::
+   :toctree: api
+   :template:
+   :recursive:
+
+   seSemiProfiler_dev.fast_generator
+
+
+The VAE-GAN Model 7
+--------
+
+.. autosummary::
+   :toctree: api
+   :template:
+   :recursive:
+
+   seSemiProfiler_dev
+
+
+The VAE-GAN Model 7
 --------
 
 .. autosummary::
@@ -128,4 +157,4 @@ The VAE-GAN Model
    :template: module.rst
    :recursive:
 
-   seSemiProfiler_dev.fast_generator
+   seSemiProfiler_dev
