@@ -16,8 +16,9 @@ Initial Setup
 
 .. autosummary::
    :toctree: _modules/initial_setup
+   :template: module.rst
 
-   seSemiProfiler.initial_setup.initsetup
+   seSemiProfiler_dev.initial_setup.initsetup
 
 
 Get Example Representatives
@@ -25,8 +26,9 @@ Get Example Representatives
 
 .. autosummary::
    :toctree: _modules/get_eg_representatives
+   :template: module.rst
 
-   seSemiProfiler.get_eg_representatives.get_eg_representatives
+   seSemiProfiler_dev.get_eg_representatives.get_eg_representatives
 
 
 
@@ -35,7 +37,18 @@ The VAE-GAN Model
 
 .. autosummary::
    :toctree: _modules/fast_generator
+   :template: module.rst
 
-   seSemiProfiler.fast_generator.fastgenerator
+   seSemiProfiler_dev.fast_generator
 
+
+The VAE-GAN Model
+--------
+
+.. autosummary::
+   :toctree: _modules/fast_generator
+   :template: module.rst
+   :recursive:
+
+   seSemiProfiler_dev.fast_generator
 
