@@ -14,7 +14,7 @@ Initial Setup
    :toctree: _modules/initial_setup
    :template: module.rst
 
-   seSemiProfiler_dev.initial_setup.initsetup
+   initial_setup.initsetup
 
 
 Initial Setup 2
@@ -24,7 +24,7 @@ Initial Setup 2
    :toctree: api/initial_setup
    :template: module.rst
 
-   seSemiProfiler_dev.initial_setup.initsetup
+   initial_setup.initsetup
 
 
 Initial Setup 3
@@ -34,7 +34,7 @@ Initial Setup 3
    :toctree: initial_setup
    :template: module.rst
 
-   seSemiProfiler_dev.initial_setup.initsetup
+   initial_setup.initsetup
 
 
 
@@ -45,7 +45,7 @@ Initial Setup 4
    :toctree: 
    :template: module.rst
 
-   seSemiProfiler_dev.initial_setup.initsetup
+   initial_setup.initsetup
 
 
 
@@ -56,7 +56,7 @@ Get Example Representatives
    :toctree: _modules/get_eg_representatives
    :template: module.rst
 
-   seSemiProfiler_dev.get_eg_representatives.get_eg_representatives
+   get_eg_representatives.get_eg_representatives
 
 
 
@@ -67,7 +67,7 @@ The VAE-GAN Model
    :toctree: _modules/fast_generator
    :template: module.rst
 
-   seSemiProfiler_dev.fast_generator
+   fast_generator
 
 
 The VAE-GAN Model 1
@@ -78,7 +78,7 @@ The VAE-GAN Model 1
    :template: module.rst
    :recursive:
 
-   seSemiProfiler_dev.fast_generator
+   fast_generator
 
 
 
@@ -90,7 +90,7 @@ The VAE-GAN Model 2
    :template: module.rst
    :recursive:
 
-   seSemiProfiler_dev.fast_generator
+   fast_generator
 
 
 
@@ -102,7 +102,7 @@ The VAE-GAN Model 3
    :template: module.rst
    :recursive:
 
-   seSemiProfiler_dev.fast_generator
+   fast_generator
 
 
 The VAE-GAN Model 4
@@ -113,7 +113,7 @@ The VAE-GAN Model 4
    :template: module.rst
    :recursive:
 
-   seSemiProfiler_dev.fast_generator
+   fast_generator
 
 
 The VAE-GAN Model 5
@@ -124,7 +124,7 @@ The VAE-GAN Model 5
    :template:
    :recursive:
 
-   seSemiProfiler_dev.fast_generator
+   fast_generator
 
 
 The VAE-GAN Model 6
@@ -135,26 +135,6 @@ The VAE-GAN Model 6
    :template:
    :recursive:
 
-   seSemiProfiler_dev.fast_generator
+   fast_generator
 
 
-The VAE-GAN Model 7
---------
-
-.. autosummary::
-   :toctree: api
-   :template:
-   :recursive:
-
-   seSemiProfiler_dev
-
-
-The VAE-GAN Model 7
---------
-
-.. autosummary::
-   :toctree: api
-   :template: module.rst
-   :recursive:
-
-   seSemiProfiler_dev
