@@ -1,5 +1,6 @@
 Installation
 ============
+This page includes instructions for installing scSemiProfiler.
 
 Prerequisites
 -------------
