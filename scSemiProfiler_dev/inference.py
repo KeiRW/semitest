@@ -9,7 +9,7 @@ from anndata import AnnData
 import scanpy as sc
 from sklearn.neighbors import kneighbors_graph
 import gc
-from .fast_generator import *
+from scSemiProfiler_dev.fast_generator import *
 from typing import Union, Tuple
 import pickle
 
@@ -311,6 +311,9 @@ def fast_semi(name:str,reprepid:int,tgtpid:int,premodel:Union[fastgenerator,str]
         Inferred single-cell data
     model
         Trained inference model
+        
+        
+    
     """
     
     
@@ -486,6 +489,14 @@ def scinfer(name:str, representatives:str,cluster:str,targetid:str,bulktype:str=
         Infer stage learning rate.
     device 
         Which device to use, e.g. 'cpu', 'cuda:0'.
+
+    Example
+    -------
+    >>> name = 'project_name'
+    >>> representatives = name + '/status/init_representatives.txt'
+    >>> cluster = name + '/status/init_cluster_labels.txt'
+    >>> scSemiProfiler.scinfer(name = name, representatives = representatives, cluster = cluster, bulktype = 'real')
+
 
     """
     

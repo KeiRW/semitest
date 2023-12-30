@@ -186,7 +186,7 @@ def activeselection(name:str, representatives:str,cluster:str,batch:int,lambdasc
     """
     Use active learning to select the next batch of representatives
     
-    Parameters:
+    Parameters
     ----------
     name 
         Project name.
@@ -200,6 +200,13 @@ def activeselection(name:str, representatives:str,cluster:str,batch:int,lambdasc
         Scaling factor for the single-cell transformation difficulty from the representative to the target.
     lambdapb
         Scaling factor for the pseudobulk data.difference. 
+    
+    Example
+    -------
+    >>> name = 'project_name'
+    >>> representatives = name + '/status/init_representatives.txt'
+    >>> cluster = name + '/status/init_cluster_labels.txt'
+    >>> semidev.activeselection(name, representatives,cluster,batch=2,lambdasc=1,lambdapb=1)
     
     """
     

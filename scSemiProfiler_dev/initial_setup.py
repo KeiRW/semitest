@@ -10,7 +10,7 @@ def initsetup(name:str, bulk:str,normed:str,geneselection:str,batch:int) -> None
     """
     Initial setup of the semi-profiling pipeline, including processing the bulk data, clustering for finding the initial representatives.
     
-    Parameters:
+    Parameters
     ----------
     name
         Project name. 
@@ -23,6 +23,17 @@ def initsetup(name:str, bulk:str,normed:str,geneselection:str,batch:int) -> None
     batch 
         Representative selection batch size.
     
+    
+    Example
+    --------
+    >>> import scSemiProfiler
+    >>> name = 'runexample'
+    >>> bulk = 'example_data/bulkdata.h5ad'
+    >>> normed = 'yes'
+    >>> geneselection = 'no'
+    >>> batch = 2
+    >>> scSemiProfiler.initsetup(name, bulk,normed,geneselection,batch)
+
     """
     
     print('Start initial setup')

@@ -240,7 +240,7 @@ def scprocess(name:str,singlecell:str,normed:str='yes',cellfilter:str='no',thres
     """
     Process the reprsentatives' single-cell data, including preprocessing and feature augmentations.
 
-    Parameters:
+    Parameters
     ----------
     name
         Project name.
@@ -258,6 +258,13 @@ def scprocess(name:str,singlecell:str,normed:str='yes',cellfilter:str='no',thres
         The proportion of top features to increase importance weight.
     k
         K for the K-NN graph built for cells.
+        
+        
+    Example
+    -------
+    >>> scSemiProfiler.scprocess(name='project_name',singlecell=name+'/representative_sc.h5ad',normed='yes',cellfilter='no',threshold=1e-3,geneset='yes',weight='yes',k=15)
+    
+    
     """
     
     print('Processing representative single-cell data')

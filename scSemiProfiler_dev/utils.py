@@ -19,7 +19,7 @@ import scipy.stats as stats
 import gseapy
 import copy
 from typing import Tuple
-from .inference import *
+from scSemiProfiler_dev.inference import *
 
 import faiss
 from sklearn.decomposition import PCA
@@ -111,6 +111,10 @@ def estimate_cost(total_samples:int,n_representatives:int) -> Tuple[float,float]
         Cost of semi-profiling
     realcost
         Cost of real-profiling
+        
+    Example
+    -------
+    >>> semicost, realcost = estimate_cost(12,2)
     """
     
     bulkcost = 7000 + total_samples * 110
@@ -139,6 +143,11 @@ def visualize_recon(name:str, representative:Union[int,str]) -> None:
     representative:
         Representative sample ID (string or int)
         
+    Example
+    -------
+    >>> name = 'project name'
+    >>> visualize_recon(name, 6)
+
     """
     
     sids = []
@@ -208,7 +217,27 @@ def visualize_inferred(name:str, target:int, representatives:list, cluster_label
         Representatives sample IDs (int)
     cluster_labels:
         Cluster labels
-        
+    
+    Example
+    -------
+    >>> name = 'project name'
+    >>> 
+    >>> # load representatives and cluster labels lists
+    >>> repres = []
+    >>> f=open(name + '/status/init_representatives.txt','r')
+    >>> lines = f.readlines()
+    >>> f.close()
+    >>> for l in lines:
+    >>>     repres.append(int(l.strip()))
+    >>> 
+    >>> cl = []
+    >>> f=open(name + '/status/init_cluster_labels.txt','r')
+    >>> lines = f.readlines()
+    >>> f.close()
+    >>> for l in lines:
+    >>>     cl.append(int(l.strip()))
+    >>>
+    >>> visualize_inferred(name, 0, repres, cl)
     """
     
     sids = []
@@ -262,6 +291,12 @@ def loss_curve(name:str, reprepid:int=None,tgtpid:int=None,stage:int=1)->None:
         target sample IDs 
     stage:
         The training stage to visualize, 1: pretrain1; 2: pretrain2; 3: inference 
+        
+    Example
+    -------
+    >>> name = 'project name'
+    >>> loss_curve(name, reprepid='BGCV09_CV0279',tgtpid=None,stage=1) # or loss_curve(name, sids, reprepid=6,tgtpid=None,stage=1)
+
         
     """
     
@@ -332,6 +367,15 @@ def assemble_cohort(name:str,
     -------
     semidata:
         The assembled and annotated semi-profiled dataset
+
+    Example
+    -------
+    >>> semisdata = assemble_cohort(name,
+    >>>                 repre,
+    >>>                 cls,
+    >>>                 celltype_key = 'celltypes',
+    >>>                 sample_info_keys = ['states_collection_sum'])
+
 
     """
     
@@ -478,6 +522,11 @@ def assemble_representatives(name:str,celltype_key:str='celltypes',sample_info_k
         The real-profiled representative dataset
     infrepdata:
         The inferred representative dataset
+
+    Example
+    -------
+    >>> real_rep, inferred_rep = assemble_representatives(name,celltype_key='celltypes',sample_info_keys = ['states_collection_sum'],rnd=2,batch=2)
+
 
     """
     
@@ -635,7 +684,17 @@ def compare_umaps(
         Real-profiled dataset
     semidata
         Semi-profiled dataset
-
+        
+    Example
+    -------
+    >>> combined_data,gtdata,semidata = compare_umaps(
+    >>>             semidata = semisdata, # assembled semi-profiled dataset
+    >>>             name = name,
+    >>>             representatives = name + '/status/init_representatives.txt',
+    >>>             cluster_labels = name + '/status/init_cluster_labels.txt',
+    >>>             celltype_key = 'celltypes'
+    >>>             )
+    
     """
     
     # visualize UMAPs of real-profiled and semi-profiled data for comparison
@@ -702,6 +761,15 @@ def compare_adata_umaps(
     semidata
         Semi-profiled dataset
         
+    Example
+    -------
+    >>> combdata, gtdata, semidata = compare_adata_umaps(
+    >>> inferred_rep, # inferred representatives from the last round
+    >>> real_rep,     # real-profiled representatives from the current round          
+    >>> name = name,  # project name
+    >>> celltype_key = 'celltypes'
+    >>> )
+        
     """
     
     
@@ -754,6 +822,9 @@ def celltype_proportion(adata:anndata.AnnData,totaltypes:Union[np.array,list]) -
     prop
         Cell type proportion
         
+    Example
+    -------
+    >>> real_prop = celltype_proportion(real_rep,totaltypes)
     """
     
     prop = np.zeros(len(totaltypes))
@@ -791,6 +862,14 @@ def composition_by_group(
     title:
         Plot title
     
+    Example
+    -------
+    >>> groupby = 'states_collection_sum'
+    >>> composition_by_group(
+    >>>     adata = gtdata,
+    >>>     groupby = groupby,
+    >>>     title = 'Ground truth'
+    >>>     )
 
         
     """
@@ -874,6 +953,9 @@ def geneset_pattern(
     pattern
         np.array
         
+    Example
+    -------
+    >>> gtmtx = geneset_pattern(gtdata,IFN_genes,'states_collection_sum','celltypes')
     """
     
     sc.tl.score_genes(adata, genes, ctrl_size=50, gene_pool=None, n_bins=25, score_name='geneset', random_state=0, copy=False, use_raw=None)
@@ -917,6 +999,9 @@ def celltype_signature_comparison(gtdata:anndata.AnnData,semisdata:anndata.AnnDa
     celltype_key:
         The key in .obs specifying the cell type labels
         
+    Example
+    -------
+    >>> celltype_signature_comparison(gtdata=gtdata,semisdata=semisdata,celltype_key='celltypes')
     """
     totaltypes = np.unique(gtdata.obs[celltype_key])
     
@@ -966,7 +1051,11 @@ def comb(a:int,b:int) -> mp.mpf:
     cad
         Choose a from b
         
+    Example
+    -------
+    >>> print(comb(5,3))
     """
+    
     a=mp.mpf(a)
     b=mp.mpf(b)
     cab = fac(a)/fac(a-b)/fac(b)
@@ -992,6 +1081,10 @@ def hyperp(N:int,n1:int,n2:int,k:int) -> mp.mpf:
     p
         cdf
         
+    Example
+    -------
+    >>> print(hyperp(6000,100,100,97))
+    
     """
     #cdf
     
@@ -1021,7 +1114,11 @@ def hypert(N:int,n1:int,n2:int,k:int) -> mp.mpf:
     -------
     pval
         p-value
-        
+    
+    Example
+    -------
+    >>> print(hypert(6000,100,100,97))
+    
     """
     cdf = mp.mpf(0)
     for i in range(0,int(k)+1):
@@ -1212,6 +1309,9 @@ def rrho(gtdata:anndata.AnnData,semisdata:anndata.AnnData,celltype_key:str,cellt
     celltype:
         The selected cell type to analyze 
 
+    Example
+    -------
+    >>> rrho(gtdata=gtdata,semisdata=semisdata,celltype_key='celltypes',celltype='CD4')
     """
     
     print('Plotting RRHO for comparing ' + str(celltype) + ' markers.')
@@ -1278,6 +1378,10 @@ def enrichment_comparison(name:str, gtdata:anndata.AnnData, semisdata:anndata.An
         The key in anndata.AnnData.obs for storing the cell type information
     selectedtype:
         The selected cell type to analyze 
+
+    Example
+    -------
+    >>> enrichment_comparison(name, gtdata, semisdata, celltype_key = 'celltypes', selectedtype = 'CD4')
 
     """
     
@@ -1425,6 +1529,9 @@ def faiss_knn(query:np.array, x:np.array, n_neighbors:int=1) -> np.array:
     -------
     weights: distances
 
+    Example
+    -------
+    >>> faiss_knn(ma,mb,n_neighbors=1)
     """
     
     
@@ -1474,6 +1581,10 @@ def get_error(name:str)->Tuple[list,list,list,list]:
         The errors of semi-profiling
     naiveerrors
         The errors of the selection-only method 
+
+    Example
+    -------
+    >>> upperbounds, lowerbounds, semierrors, naiveerrors = get_error(name)
 
     """
     
@@ -1657,6 +1768,10 @@ def errorcurve(upperbounds:list, lowerbounds:list, semierrors:list, naiveerrors:
         Representative selection batch size
     total_samples
         The total number of samples in the cohort
+
+    Example
+    -------
+    >>> errorcurve(upperbounds, lowerbounds, semierrors, naiveerrors, batch=2,total_samples = 12)
 
     """
     
