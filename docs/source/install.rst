@@ -1,3 +1,6 @@
+Installation
+============
+
 
 Prerequisites
 -------------
@@ -10,6 +13,7 @@ Second, create a new conda environment and activate it::
     conda activate semiprofiler
 
 Finally, install the version of PyTorch compatible with your devices by following the `instructions on the official website <https://pytorch.org/get-started/locally/>`_.
+
 
 
 Installing scSemiProfiler
