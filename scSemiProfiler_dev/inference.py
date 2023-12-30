@@ -9,7 +9,7 @@ from anndata import AnnData
 import scanpy as sc
 from sklearn.neighbors import kneighbors_graph
 import gc
-from scSemiProfiler_dev.fast_generator import *
+from .fast_generator import *
 from typing import Union, Tuple
 import pickle
 
